@@ -1,9 +1,12 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import classes from './AuthForm.module.css';
+import AuthContext from '../../store/auth-context'
 
 const AuthForm = () => {
   const emailInputRef = useRef('');
   const passwordInputRef = useRef('');
+
+  const authCtx= useContext(AuthContext)
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setLoading] = useState(false);
 // const [dataflash, setDataflash] = useState(false)
@@ -59,8 +62,7 @@ fetch(url, {
      }
    })
    .then((data)=>{
-console.log(data)
-
+    authCtx.login(data.idToken);
    })
    .catch((error) => {
      alert(error.message)
